@@ -19,12 +19,12 @@ class DepthCalculator {
     }
     let maximumDepth = depth;
 
-    for (let i = 0; i < arr.length; i++) {
-      if (Array.isArray(arr[i])) {
-        const leng = this.calculateDepth(arr[i], depth + 1);
-        maximumDepth = Math.max(maximumDepth, leng);
-      }
-    }
+    // for (let i = 0; i < arr.length; i++) {
+    //   if (Array.isArray(arr[i])) {
+    //     const calc = this.calculateDepth(arr[i], depth + 1);
+    //     maximumDepth = Math.max(maximumDepth, calc);
+    //   }
+    // }
 
     return maximumDepth;
   }

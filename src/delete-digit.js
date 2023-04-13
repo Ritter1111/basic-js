@@ -13,7 +13,7 @@ const { NotImplementedError } = require("../extensions/index.js");
  */
 function deleteDigit(n) {
   let array = ("" + n).split("").map(Number);
-  let max = 0;
+  let max = null;
   for (let i = 0; i < array.length; i++) {
     let num = +array
       .slice(0, i)
