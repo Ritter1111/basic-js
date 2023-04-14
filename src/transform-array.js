@@ -14,39 +14,42 @@ const { NotImplementedError } = require("../extensions/index.js");
  *
  */
 function transform(arr) {
-  let result = [];
-  if (Array.isArray(arr)) {
-    if (arr.length === 0) {
-      return [];
-    }
-    for (let i = 0; i < arr.length; i++) {
-      if (arr[i] === "--discard-prev") {
-        if (arr[i - 2] !== "--discard-next" && result.length > 0) {
-          result.pop();
-        }
-      } else if (arr[i] === "--double-prev") {
-        if (arr[i - 2] !== "--discard-next") {
-          result.push(arr[i - 1]);
-        }
-      } else if (arr[i] === "--double-next") {
-        if (i + 1 < arr.length) {
-          result.push(arr[i + 1]);
-        }
-      } else if (arr[i] === "--discard-next") {
-        i++;
-      } else {
-        result.push(arr[i]);
-      }
-      for(let i=0; i<result.length;i++){
-        if(result[i] === undefined){
-          result.pop()
-        }
-      }
-    }
-    return result;
-  } else {
+  if (!Array.isArray(arr)) {
     throw new Error("'arr' parameter must be an instance of the Array!");
   }
+  let copyArray = arr.slice(0);
+
+  for (let i = 0; i < copyArray.length; i++) {
+    if (copyArray[i] === "--discard-next") {
+      if (i !== copyArray.length) {
+        copyArray.splice(i + 1, 1);
+      }
+      copyArray.splice(i, 1);
+      i--;
+    } else if (copyArray[i] === "--double-prev") {
+      if (i > 0 ) {
+        copyArray.splice(i - 1, 0, copyArray[i - 1]);
+        i++;
+      }
+      copyArray.splice(i, 1);
+      i--;
+    } else if (copyArray[i] === "--discard-prev") {
+      if (i !== 0 ) {
+        copyArray.splice(i - 1, 1);
+        i++;
+      }
+      copyArray.splice(i, 1);
+      i--;
+    } else if (copyArray[i] === "--double-next") {
+      if (i + 1 < copyArray.length) {
+        copyArray.splice(i, 0, copyArray[i + 1]);
+        i++;
+      }
+      copyArray.splice(i, 1);
+      i--;
+    }
+  }
+  return copyArray;
 }
 
 module.exports = {
