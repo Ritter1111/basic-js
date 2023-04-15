@@ -18,7 +18,14 @@ class DepthCalculator {
       return depth;
     }
     let maximumDepth = depth;
-
+    for (let i = 0; i < arr.length; i++) {
+      if (Array.isArray(arr[i])) {
+        maximumDepth = Math.max(
+          maximumDepth,
+          this.calculateDepth(arr[i], depth + 1)
+        );
+      }
+    }
     return maximumDepth;
   }
 }
