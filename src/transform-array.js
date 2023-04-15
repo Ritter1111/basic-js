@@ -21,22 +21,22 @@ function transform(arr) {
 
   for (let i = 0; i < copyArray.length; i++) {
     if (copyArray[i] === "--discard-next") {
-      if (i !== copyArray.length) {
+      if (i + 1 < copyArray.length) {
         copyArray.splice(i + 1, 1);
       }
       copyArray.splice(i, 1);
       i--;
     } else if (copyArray[i] === "--double-prev") {
-      if (i > 0 ) {
-        copyArray.splice(i - 1, 0, copyArray[i - 1]);
+      if (i - 1 >= 0) {
+        copyArray.splice(i, 0, copyArray[i - 1]);
         i++;
       }
       copyArray.splice(i, 1);
       i--;
     } else if (copyArray[i] === "--discard-prev") {
-      if (i !== 0 ) {
+      if (i - 1 >= 0) {
         copyArray.splice(i - 1, 1);
-        i++;
+        i--;
       }
       copyArray.splice(i, 1);
       i--;
